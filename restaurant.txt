@@ -1,0 +1,74 @@
+app.jsx
+
+import { useState } from "react";
+import Menu from "./Menu"
+import Order from "./order"
+export default function App()
+{
+  const [order,setOrder]=useState([])
+  const or=[{id:1 ,name:"dosa",price:200},{id:2 ,name:"rice",price:200}]
+  const add=(item)=>
+  {
+    setOrder([...order,item])
+  }
+  const del=(indextoremove)=>
+  {
+    setOrder(order.filter((_,index)=>index!==indextoremove))
+  }
+const total=()=>
+{
+return order.reduce((c,item)=>c+parseInt(item.price),0)
+}
+  return(
+    <div>
+      {or.map((e,index)=>
+      (  <Menu key={index} id={e.id} name={e.name} price={e.price}  add={add} />
+
+      ))}
+      <Order order={order} del={del} total={total()}/>
+  
+    </div>
+  )
+}
+
+menu.jsx
+
+export default function Menu({id,name,price,add,del})
+{
+return(
+    <>
+    <h1>menu:</h1>
+    <h2>id:{id} name:{name} price:{price} </h2>
+    <button  onClick={()=>add({id,name,price})}>add</button>
+  
+    </>
+)
+}
+
+
+
+order.jsx
+export default function Order({order,del,total})
+{
+return(
+   <div>
+    {order.length===0?
+    <h4>no order</h4>:(
+        <div>
+      { order.map((c,index)=>(
+<div key={index}>
+                <h3 >  ordername={c.name}</h3>
+                <button onClick={()=>del(index)}>del</button>    
+                
+     </div>     
+       ))
+             }
+       <h4>total={total}</h4>
+       </div> )
+        
+}
+    
+
+   </div>
+)
+}
