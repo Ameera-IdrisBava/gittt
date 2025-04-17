@@ -1,0 +1,68 @@
+Employee.ts
+
+interface Emp
+{
+    id:number
+    name:string
+}
+class Employee implements Emp
+{
+    id: number
+    name: string
+    emp:Emp[]=[]
+    
+   
+    add(id: number,
+        name: string):void{
+            const e:Emp={id,name}
+        this.emp.push(e)
+    }
+    dis():Emp[]{
+        return this.emp
+    }
+
+}
+const c =new Employee()
+
+function add()
+{
+    const n=document.getElementById("emp") as HTMLInputElement
+    const a=document.getElementById("empp") as HTMLInputElement
+    const idd:number=parseInt(n.value)
+    const na:string=a.value
+    if(!isNaN(idd)&& na)
+    {
+        c.add(idd,na)
+    }
+ alert("added")
+}
+function dis()
+{
+    const ele=document.getElementById("emppp") as HTMLParagraphElement
+    ele.innerHTML = ""; // ✅ clear previous content
+
+    const eem=c.dis()
+    eem.forEach((e) => {
+        ele.innerHTML += `id:${e.id} name:${e.name}<br>`
+        
+    });
+}
+e.HTML
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>employee</title>
+</head>
+<body>
+    <h1>employee:</h1>
+    <input id="emp" type="text">
+    <input id="empp" type="text">
+    <button onclick="add()">add</button>
+    <button onclick="dis()">dis</button>
+    <p id="emppp"></p>
+    <script src="Employee.js" defer></script>
+
+</body>
+</html>
