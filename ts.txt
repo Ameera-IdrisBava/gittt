@@ -1,0 +1,167 @@
+ecom,ts
+
+class OrderNode {
+    constructor(
+      public orderId: number,
+      public next: OrderNode | null = null
+    ) {}
+  }
+  
+  class OrderList {
+    private head: OrderNode | null = null;
+    private tail: OrderNode | null = null;
+  
+    addOrder(orderId: number) {
+      const newOrder = new OrderNode(orderId);
+      if (!this.head) {
+        this.head = this.tail = newOrder;
+      } else {
+        this.tail!.next = newOrder;
+        this.tail = newOrder;
+      }
+      console.log(`Order ${orderId} added.`);
+    }
+  
+    processOrder() {
+      if (!this.head) {
+        console.log("No orders to process.");
+        return;
+      }
+      console.log(`Processing order: ${this.head.orderId}`);
+      this.head = this.head.next;
+    }
+  
+    showOrders() {
+      let current = this.head;
+      let orders: number[] = [];
+      while (current) {
+        orders.push(current.orderId);
+        current = current.next;
+      }
+      console.log("Pending Orders:", orders);
+    }
+  }
+  
+  // Example usage
+  const orderList = new OrderList();
+  orderList.addOrder(101);
+  orderList.addOrder(102);
+  orderList.processOrder();
+  orderList.showOrders();  
+
+
+
+
+
+
+
+railway.ts
+class RailwayWaitlist {
+    private stack: string[] = [];
+  
+    addPassenger(name: string) {
+      this.stack.push(name);
+      console.log(`${name} added to waitlist.`);
+    }
+  
+    assignSeat() {
+      if (this.stack.length === 0) {
+        console.log("No passengers in waitlist.");
+        return;
+      }
+      const passenger = this.stack.pop();
+      console.log(`Seat assigned to ${passenger}.`);
+    }
+  
+    showWaitlist() {
+      console.log("Current Waitlist:", this.stack);
+    }
+  }
+  
+  // Example usage
+  const waitlist = new RailwayWaitlist();
+  waitlist.addPassenger("John");
+  waitlist.addPassenger("Priya");
+  waitlist.assignSeat();
+  waitlist.showWaitlist();  
+
+
+university
+
+class BookRequestQueue {
+    private queue: string[] = [];
+  
+    requestBook(studentName: string) {
+      this.queue.push(studentName);
+      console.log(`${studentName} has requested a book.`);
+    }
+  
+    assignBook() {
+      if (this.queue.length === 0) {
+        console.log("No book requests to process.");
+        return;
+      }
+      const student = this.queue.shift();
+      console.log(`Book assigned to ${student}.`);
+    }
+  
+    showQueue() {
+      console.log("Current Queue:", this.queue);
+    }
+  }
+  
+  // Example usage
+  const library = new BookRequestQueue();
+  library.requestBook("Kums");
+  library.requestBook("Prabeen");
+  library.assignBook();
+  library.showQueue();  
+
+voting.ts
+class VotingSystem {
+    private votes: Map<string, number> = new Map();
+  
+    castVote(candidate: string) {
+      if (!candidate) {
+        console.log("Invalid vote.");
+        return;
+      }
+  
+      const currentVotes = this.votes.get(candidate) || 0;
+      this.votes.set(candidate, currentVotes + 1);
+      console.log(`Vote casted for ${candidate}`);
+    }
+  
+    findWinner() {
+      let maxVotes = 0;
+      let winners: string[] = [];
+  
+      for (const [candidate, count] of this.votes.entries()) {
+        if (count > maxVotes) {
+          maxVotes = count;
+          winners = [candidate];
+        } else if (count === maxVotes) {
+          winners.push(candidate);
+        }
+      }
+  
+      if (winners.length > 1) {
+        console.log("It's a tie between:", winners.join(", "));
+      } else {
+        console.log("Winner is:", winners[0]);
+      }
+    }
+  
+    showVotes() {
+      console.log("Vote Counts:", this.votes);
+    }
+  }
+  
+  // Example usage
+  const voting = new VotingSystem();
+  voting.castVote("Alice");
+  voting.castVote("Bob");
+  voting.castVote("Alice");
+  voting.findWinner();
+  voting.showVotes();
+  
