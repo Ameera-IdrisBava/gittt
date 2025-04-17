@@ -1,0 +1,104 @@
+app.jsx
+
+import { useState, useEffect } from "react";
+import Borrow from "./Borrow";
+
+export default function App() {
+  const initialBooks = [
+    { id: 1, name: "Harry Potter" },
+    { id: 2, name: "Jungle Book" },
+    { id: 3, name: "Sherlock Holmes" },
+    { id: 4, name: "The Alchemist" }
+  ];
+
+  // ✅ USER ADDED: List of users
+  const users = [
+    { id: 1, name: "Alice" },
+    { id: 2, name: "Bob" },
+    { id: 3, name: "Charlie" }
+  ];
+
+  const [availableBooks, setAvailableBooks] = useState([]);
+  const [borrowedBooks, setBorrowedBooks] = useState([]);
+
+  // ✅ USER ADDED: State to store selected user
+  const [selectedUser, setSelectedUser] = useState("");
+
+  useEffect(() => {
+    setAvailableBooks(initialBooks);
+  }, []);
+
+  const borrowBook = (book) => {
+    // ✅ USER ADDED: Alert if no user is selected
+    if (!selectedUser) {
+      alert("Please select a user to borrow the book.");
+      return;
+    }
+
+    // ✅ USER ADDED: Get selected user object
+    const user = users.find((u) => u.id === parseInt(selectedUser));
+
+    // ✅ USER ADDED: Attach user info to borrowed book
+    const borrowedWithUser = { ...book, user: user.name };
+
+    setBorrowedBooks([...borrowedBooks, borrowedWithUser]);
+    setAvailableBooks(availableBooks.filter((b) => b.id !== book.id));
+  };
+
+  const returnBook = (index) => {
+    const returningBook = borrowedBooks[index];
+    setBorrowedBooks(borrowedBooks.filter((_, i) => i !== index));
+    setAvailableBooks([...availableBooks, { id: returningBook.id, name: returningBook.name }]);
+  };
+
+  return (
+    <div>
+      <h1>📚 Available Books:</h1>
+
+      {/* ✅ USER ADDED: User selection dropdown */}
+      <label>Select user:</label>
+      <select onChange={(e) => setSelectedUser(e.target.value)} value={selectedUser}>
+        <option value="">-- Select User --</option>
+        {users.map((u) => (
+          <option key={u.id} value={u.id}>{u.name}</option>
+        ))}
+      </select>
+
+      {availableBooks.map((b) => (
+        <div key={b.id}>
+          <h2>{b.name}</h2>
+          <button onClick={() => borrowBook(b)}>Borrow</button>
+        </div>
+      ))}
+
+      {/* Passing borrowed books and return function to child */}
+      <Borrow bor={borrowedBooks} ret={returnBook} />
+    </div>
+  );
+}
+
+
+
+Borrown.jsx
+
+import React from "react";
+
+export default function Borrow({ bor, ret }) {
+  return (
+    <div>
+      <h1>📦 Borrowed Books:</h1>
+      {bor.length === 0 ? (
+        <h2>No books borrowed yet</h2>
+      ) : (
+        bor.map((e, index) => (
+          <div key={index}>
+            <h3>📚 {e.name}</h3>
+            {/* Display the user who borrowed the book */}
+            <p>Borrowed by: {e.user}</p>
+            <button onClick={() => ret(index)}>Return</button>
+          </div>
+        ))
+      )}
+    </div>
+  );
+}
