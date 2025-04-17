@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>CSS Basics Website</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>CSS Basics</h1>
+    <p>Simple CSS website</p>
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="#selectors">Selectors</a></li>
+      <li><a href="#colors">Colors</a></li>
+      <li><a href="#flexbox">Flexbox</a></li>
+      <li><a href="#grid">Grid</a></li>
+      <li><a href="#comparison">Comparison</a></li> <!-- New section -->
+    </ul>
+  </nav>
+
+  <main>
+    <section id="selectors">
+      <h2>Selectors</h2>
+      <p>CSS selectors are used to target HTML elements based on their tag, class, ID, or attributes.</p>
+    </section>
+
+    <section id="colors">
+      <h2>Colors</h2>
+      <p>CSS allows you to define colors using named colors, hex values, RGB, RGBA, and HSL.</p>
+      <div class="color-box"></div>
+    </section>
+
+    <section id="flexbox">
+      <h2>Flexbox</h2>
+      <p>Flexbox is a layout model that allows items to align and distribute space within a container.</p>
+      <div class="flex-container">
+        <div class="flex-item">1</div>
+        <div class="flex-item">2</div>
+        <div class="flex-item">3</div>
+      </div>
+    </section>
+
+    <section id="grid">
+      <h2>Grid</h2>
+      <p>CSS Grid Layout provides a powerful system for creating two-dimensional layouts.</p>
+      <div class="grid-container">
+        <div class="grid-item">A</div>
+        <div class="grid-item">B</div>
+        <div class="grid-item">C</div>
+        <div class="grid-item">D</div>
+      </div>
+    </section>
+
+    <section id="comparison">
+      <h2>Flexbox vs Grid Comparison</h2>
+      <table class="comparison-table">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Flexbox</th>
+            <th>CSS Grid</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Layout Type</td>
+            <td>One-dimensional</td>
+            <td>Two-dimensional</td>
+          </tr>
+          <tr>
+            <td >Primary Use</td>
+            <td>Aligning items in a single direction</td>
+            <td>Complex layouts with rows and columns</td>
+          </tr>
+          <tr>
+            <td>Item Alignment</td>
+            <td>Along a single axis (row or column)</td>
+            <td>Along both rows and columns</td>
+          </tr>
+          <tr>
+            <td>Gap Control</td>
+            <td>Uses margins or gap</td>
+            <td>Uses grid-gap, row-gap, column-gap</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <footer>
+    <p>Created as a demo for learning CSS concepts.</p>
+  </footer>
+  <div id="one">
+    <p id="two">1</p>
+  </div>
+</body>
+</html>
+
+
+css file
+
+/* Basic Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    /* height: 500px;
+    width:500px; */
+    border:5px solid black;
+    box-sizing: border-box;
+    background-color:rgb(148, 223, 203);
+  }
+  
+  header {
+    background-color: rgb(131, 16, 203);
+    color: white;
+    padding: 50px;
+    text-align: center;
+  }
+  
+  nav ul {
+    list-style-type: none;
+    padding: 0;
+    background-color: #333;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+  }
+  
+  nav ul li {
+    margin: 0 15px;
+  }
+  
+  nav ul li a {
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+  }
+  
+  main {
+    padding: 1rem;
+  }
+  
+  h2 {
+    color: #333;
+  }
+  
+  /* Colors Section */
+  .color-box {
+    width: 200px;
+    height: 200px;
+    background-color: #20021c;
+    margin: 10px 25px;
+  }
+  
+  /* Flexbox Section */
+  .flex-container {
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 1rem;
+  }
+  
+  .flex-item {
+    background-color: #02092a;
+    padding: 10px;
+    text-align: center;
+    color: white;
+    width: 100px;
+    border-radius: 5px;
+  }
+  
+  /* Grid Section */
+  .grid-container {
+    display: grid;
+    /* grid-template-columns: repeat(2, 1fr); */
+    grid-template-rows: 200px 200px ;
+    grid-template-columns: 200px 200px 200px ;
+    gap: 10px;
+    margin-top: 1rem;
+  }
+  
+  .grid-item {
+    background-color: #04ffab;
+    color: white;
+    padding: 20px;
+    text-align:flex-end;
+    border-radius: 5px;
+  }
+  
+  /* Footer */
+  footer {
+    background-color: #44084ba9;
+    color: white;
+    text-align: center;
+    padding: 1rem;
+    position: relative;
+    bottom:10px;
+    width: 100%;
+  }
+  
+  /* Comparison Table */
+.comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+  }
+  
+  .comparison-table th, .comparison-table td {
+    border: 1px solid #060606;
+    padding: 10px;
+    text-align:left;
+  }
+  
+  .comparison-table th {
+    background-color: #80a081;
+    color: white;
+  }
+  
+  .comparison-table td {
+    background-color: #f9f9f9;
+  }
+  
+#one{
+    position: relative;
+    left: 600px;
+    border: 10px solid red;
+    height: 100px;
+    width: 100px;
+}
+#two{
+    position: absolute;
+    top: 50px;
+}
