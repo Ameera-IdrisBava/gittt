@@ -1,0 +1,69 @@
+code:npm install react-router-dom
+
+app.jsx
+
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Login from "./Login";
+import Home from "./Home";
+
+export default function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/home" element={<Home />} />
+      </Routes>
+    </Router>
+  );
+}
+
+
+login.jsx
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+export default function Login() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+
+  const handleLogin = () => {
+    // Very basic login logic (just for example)
+    if (username === "admin" && password === "1234") {
+      navigate("/home");
+    } else {
+      alert("Invalid credentials");
+    }
+  };
+
+  return (
+    <div>
+      <h1>🔐 Login Page</h1>
+      <input
+        type="text"
+        placeholder="Username"
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
+      /><br />
+      <input
+        type="password"
+        placeholder="Password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+      /><br />
+      <button onClick={handleLogin}>Login</button>
+    </div>
+  );
+}
+
+
+home.jsx
+
+export default function Home() {
+    return (
+      <div>
+        <h1>🏡 Welcome to Home Page!</h1>
+      </div>
+    );
+  }
+  
