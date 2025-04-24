@@ -1,0 +1,172 @@
+// single led brightness
+void setup()
+{
+  pinMode(LED_BUILTIN, OUTPUT);
+}
+
+void loop()
+{
+  digitalWrite(LED_BUILTIN, HIGH);
+  delay(1000); // Wait for 1000 millisecond(s)
+  digitalWrite(LED_BUILTIN, LOW);
+  delay(1000); // Wait for 1000 millisecond(s)
+}
+
+
+//fading
+const int pin=9;
+int brightness=0;
+int fade=50;
+
+void setup()
+{
+  pinMode(pin, OUTPUT);
+}
+
+void loop()
+{
+  analogWrite(pin,255);
+  brightness+=fade;
+  if (brightness>255)
+    brightness-=fade;
+  delay(500);
+}
+
+
+//potentiometer
+int potpin = A0;  //term 1 to gnd,2 to A0,3 to5v
+int ledpin = 13; //led to 13
+int val;    
+void setup() 
+{ 
+pinMode(ledpin, OUTPUT); 
+} 
+ 
+void loop() 
+{ 
+  val = analogRead(potpin);             
+  val = map(val, 0, 1023, 500, 5);      
+  digitalWrite(ledpin, HIGH);
+  delay(val);                          
+  digitalWrite(ledpin, LOW);
+  delay(val);
+} 
+
+
+//peizo 
+ const int piezoPin = A0; // Analog pin connected to the piezo's +ve 
+int vibrationValue = 0;  // Variable to store the vibration reading
+void setup() {
+  pinMode(piezoPin, INPUT);
+}
+
+void loop() {
+  vibrationValue = analogRead(piezoPin);
+  Serial.println(vibrationValue);
+  delay(100);
+}
+
+//pir
+int sensorState = 0;
+void setup()
+{
+  pinMode(11, INPUT); //pir's signal,pir's power to 5v,gnd to power gnd
+  pinMode(2, OUTPUT); //led's positive through resistor ,gnd to gnd
+}
+void loop()
+{
+  sensorState = digitalRead(11);
+  if (sensorState == HIGH) {
+    digitalWrite(2, HIGH);
+  } else {
+    digitalWrite(2, LOW);
+  }
+  delay(10); 
+}
+
+
+//ultrasonic
+
+int trigPin = 10; //trigpin to 10,power to 5v,gnd to gnd,echo to 9 in digital
+int echoPin = 9;
+long time;
+float distance;
+void setup()
+{
+  pinMode(trigPin, OUTPUT); 
+  pinMode(echoPin, INPUT); 
+  Serial.begin(9600);
+}
+void loop()
+{
+  time=pulseIn(echoPin , HIGH);
+  Serial.print("time: ");
+  Serial.println(time);
+  distance = time * 0.0343/2;
+  Serial.print("Distance:");
+  Serial.println(distance);
+}
+
+//soil
+int moisture = 0;
+void setup()
+{
+  pinMode(A0, INPUT); //power to 5v,gnd to gnd,signal to A0
+  Serial.begin(9600); 
+ pinMode(13, OUTPUT);led's positive
+}
+void loop()
+{
+  moisture = analogRead(A0);  
+digitalWrite(13, LOW);
+  if (moisture < 200) {
+    digitalWrite(13, HIGH);
+  }
+  delay(100);
+}
+
+
+//temp
+
+//power to 5v,vout to A0,gnd to gnd
+//led +ve to 12 
+int baselineTemp = 0;
+int celsius = 0;
+int fahrenheit = 0;
+void setup()
+{
+  pinMode(A0, INPUT);
+  Serial.begin(9600);
+  pinMode(2, OUTPUT);
+}void loop()
+{
+  baselineTemp = 40;
+  
+  celsius = map(((analogRead(A0) - 20) * 3.04), 0, 1023, -40, 125);
+  
+   fahrenheit = ((celsius * 9) / 5 + 32);
+  Serial.print(celsius);
+  Serial.print(" C, ");
+  Serial.print(fahrenheit);
+  Serial.println(" F");
+  
+   if (celsius < baselineTemp) {
+    digitalWrite(2, LOW);}
+
+ if (celsius >= baselineTemp && celsius < baselineTemp + 10) {
+    digitalWrite(2, HIGH);
+ }
+   if (celsius >= baselineTemp + 10 && celsius < baselineTemp + 20) {
+    digitalWrite(2, HIGH);
+   
+  }
+  if (celsius >= baselineTemp + 20 && celsius < baselineTemp + 30) {
+      
+      digitalWrite(2, HIGH);
+    }
+  if (celsius >= baselineTemp + 30) {
+    digitalWrite(2, HIGH);
+   
+  }
+      delay(1000); 
+  }
