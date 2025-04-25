@@ -1,0 +1,94 @@
+[
+  { "id": 1, "name": "Pizza", "price": 8.99, "image": "https://via.placeholder.com/100" },
+  { "id": 2, "name": "Burger", "price": 5.99, "image": "https://via.placeholder.com/100" },
+  { "id": 3, "name": "Pasta", "price": 7.99, "image": "https://via.placeholder.com/100" }
+]
+
+
+app.js
+import React, { useState } from 'react';
+import Menu from './Menu';
+import Cart from './Cart';
+
+function App() {
+  const [cart, setCart] = useState([]);
+
+  const addToCart = (item) => {
+    setCart([...cart, item]);
+  };
+
+  const removeFromCart = (id) => {
+    setCart(cart.filter(item => item.id !== id));
+  };
+
+  return (
+    <div>
+      <h1>Restaurant Menu</h1>
+      <Menu addToCart={addToCart} />
+      <Cart cart={cart} removeFromCart={removeFromCart} />
+    </div>
+  );
+}
+
+export default App;
+
+
+menu.js
+import React, { useEffect, useState } from 'react';
+import FoodItem from './FoodItem';
+
+const Menu = ({ addToCart }) => {
+  const [menu, setMenu] = useState([]);
+
+  useEffect(() => {
+    fetch('/menu.json')
+      .then(res => res.json())
+      .then(data => setMenu(data));
+  }, []);
+
+  return (
+    <div>
+      <h2>Menu</h2>
+      <div style={{ display: 'flex', gap: '1rem' }}>
+        {menu.map(item => (
+          <FoodItem key={item.id} item={item} addToCart={addToCart} />
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default Menu;
+
+food
+const FoodItem = ({ item, addToCart }) => {
+  return (
+    <div style={{ border: '1px solid #ccc', padding: '10px' }}>
+      <img src={item.image} alt={item.name} width="100" />
+      <h3>{item.name}</h3>
+      <p>₹{item.price}</p>
+      <button onClick={() => addToCart(item)}>Add to Cart</button>
+    </div>
+  );
+};
+
+export default FoodItem;
+
+const Cart = ({ cart, removeFromCart }) => {
+  const total = cart.reduce((sum, item) => sum + item.price, 0);
+
+  return (
+    <div>
+      <h2>Cart</h2>
+      {cart.map(item => (
+        <div key={item.id}>
+          <span>{item.name} - ₹{item.price}</span>
+          <button onClick={() => removeFromCart(item.id)}>Remove</button>
+        </div>
+      ))}
+      <h3>Total: ₹{total.toFixed(2)}</h3>
+    </div>
+  );
+};
+
+export default Cart;
