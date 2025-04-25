@@ -1,0 +1,106 @@
+import { useState } from "react";
+
+export default function App() {
+  const [or, setOr] = useState([]);
+  const prd = [
+    { id: 1, name: "am", pr: 300 },
+    { id: 2, name: "jam", pr: 200 },
+  ];
+
+  const add = (it) => {
+    setOr((prev) => [...prev, it]);
+  };
+
+  const rem = (index) => {
+    const newArr = [...or];
+    newArr.splice(index, 1);
+    setOr(newArr);
+  };
+
+  const tot = () => {
+    return or.reduce((s, item) => s + parseInt(item.pr), 0);
+  };
+
+  const order = () => {
+    alert("Order placed");
+    setOr([]);
+  };
+
+  // basic styles
+  const containerStyle = {
+    fontFamily: "Arial",
+    padding: "20px",
+    maxWidth: "500px",
+    margin: "auto",
+    background: "#f9f9f9",
+    border: "1px solid #ddd",
+    borderRadius: "8px",
+  };
+
+  const itemCard = {
+    background: "#fff",
+    padding: "10px",
+    margin: "10px 0",
+    border: "1px solid #ccc",
+    borderRadius: "5px",
+  };
+
+  const button = {
+    padding: "6px 12px",
+    marginLeft: "10px",
+    background: "#4CAF50",
+    color: "#fff",
+    border: "none",
+    borderRadius: "4px",
+    cursor: "pointer",
+  };
+
+  const deleteButton = {
+    ...button,
+    background: "#f44336",
+  };
+
+  const orderButton = {
+    ...button,
+    background: "#2196F3",
+    marginTop: "10px",
+  };
+
+  return (
+    <div style={containerStyle}>
+      <h2>ITEMS:</h2>
+      {prd.map((e, index) => (
+        <div key={index} style={itemCard}>
+          <p>
+            <strong>{e.name}</strong> - ₹{e.pr}
+          </p>
+          <button style={button} onClick={() => add(e)}>
+            Add
+          </button>
+        </div>
+      ))}
+
+      <h2>Order:</h2>
+      {or.length === 0 ? (
+        <p style={{ color: "gray" }}>Cart is empty</p>
+      ) : (
+        <>
+          {or.map((el, index) => (
+            <div key={index} style={itemCard}>
+              <p>
+                {el.name} - ₹{el.pr}
+              </p>
+              <button style={deleteButton} onClick={() => rem(index)}>
+                Delete
+              </button>
+            </div>
+          ))}
+          <p><strong>Total: ₹{tot()}</strong></p>
+          <button style={orderButton} onClick={order}>
+            Place Order
+          </button>
+        </>
+      )}
+    </div>
+  );
+}
